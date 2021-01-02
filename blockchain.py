@@ -7,6 +7,7 @@ class Blockchain:
     def __init__(self):
         self.name = 'Fable'
         self.chain = []
+        # create genesis block
         self.createBlock(proof=1, previousHash='0')
         self.leadingZeros = '0000'
 

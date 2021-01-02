@@ -17,7 +17,7 @@ def mine():
     previousHash = blockchain.hash(previousBlock)
     block = blockchain.createBlock(proof, previousHash)
     response = {
-        'msg': 'Congrats! You just mined a block and it has been added to the block chain!',
+        'msg': 'Congrats! You just mined a block and it has been added to the blockchain!',
         'index': block['index'],
         'timestamp': block['timestamp'],
         'proof': block['proof'],
@@ -32,3 +32,12 @@ def getChain():
         'length': len(blockchain.chain)
         }
     return jsonify(response), 200
+
+@app.route('/valid', methods=['GET'])
+def isChainValid():
+    response = {
+        'valid': blockchain.isChainValid(blockchain.chain)
+    }
+    return jsonify(response), 200
+
+app.run(host='0.0.0.0', port=5000, debug=True)
