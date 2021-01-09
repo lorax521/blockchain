@@ -75,7 +75,8 @@ class CryptoCoin:
 
     def addNode(self, address):
         parsedAddress = urlparse(address)
-        self.nodes.add(parsedAddress.netloc)
+        if parsedAddress.netloc not in self.nodes:
+            self.nodes.add(parsedAddress.netloc)
 
     def replaceChain(self):
         network = self.nodes
@@ -86,10 +87,11 @@ class CryptoCoin:
             if response.status_code == 200:
                 length = response.json()['length']
                 chain = response.json()['chain']
-                if lenth > maxLength and self.isChainValid(chain):
+                if length > maxLength and self.isChainValid(chain):
                     maxLength = length
                     longestChain = chain
         if longestChain:
             self.chain = longestChain
             return True
         return False
+
